@@ -1,0 +1,11 @@
+targets:
+  LEGORACERS:
+    filename: LEGORacers.exe
+    source-root: .
+    hash:
+      sha256: fe9e881cfa3ffc208db23ab8057ecc5697bad94d2752e8eccf6c79b10a5c1103
+  GOLDP:
+    filename: GolDP.dll
+    source-root: GolDP
+    hash:
+      sha256: 37856363c936c6baeb3bdbed69de182d9ecb92752b36e6db444369117e80fdba
