@@ -104,6 +104,7 @@ add_executable(legoracers WIN32
   LEGORacers/src/crimsonforge0x800.cpp
   LEGORacers/src/opalvault0xf0.cpp
   LEGORacers/src/silvernode0x50.cpp
+  LEGORacers/src/imaginarywrench0x23bc.cpp
   LEGORacers/racers.rc
 )
 reccmp_add_target(legoracers ID LEGORACERS)
