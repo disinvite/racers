@@ -95,6 +95,10 @@ add_library(goldp SHARED
   GolDP/src/goldpexport.cpp
   GolDP/src/goldevicelist.cpp
   GolDP/src/main.cpp
+  GolDP/src/pearldew0x0c.cpp
+  GolDP/src/silverdune0x30.cpp
+  GolDP/src/slatepeak0x58.cpp
+  GolDP/src/azureridge0x38.cpp
   util/decomp.cpp
   ${COMMON_SOURCES}
 )
