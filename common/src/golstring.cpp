@@ -191,8 +191,8 @@ void GolString::CopyToString(LegoChar* p_string)
 void GolString::CopyToBuf8(LegoChar* p_buf)
 {
 	LegoS32 i = SelectionLength();
-	memset(p_buf, 0, 8);
-	i = i > 8 ? 8 : i;
+	memset(p_buf, 0, 8u);
+	i = i > 8u ? 8u : i;
 
 	while (--i >= 0) {
 		p_buf[i] = m_chars[i];
