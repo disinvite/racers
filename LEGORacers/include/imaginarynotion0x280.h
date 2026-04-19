@@ -1,15 +1,19 @@
 #ifndef IMAGINARYNOTION0X280_H
 #define IMAGINARYNOTION0X280_H
 
+#include "ceruleanemperor0x50.h"
+#include "ceruleanqueen0x58.h"
 #include "compat.h"
 #include "decomp.h"
 #include "imaginaryinterface.h"
+#include "obscureicon0x1a8.h"
 
 // VTABLE: LEGORACERS 0x004b2308
 // SIZE 0x280
 class ImaginaryNotion0x280 : public ImaginaryInterface {
 public:
 	ImaginaryNotion0x280();
+	~ImaginaryNotion0x280();
 
 	void VTable0x00(undefined4) override;                                           // vtable+0x00
 	void VTable0x04(undefined4) override;                                           // vtable+0x04
@@ -30,6 +34,7 @@ public:
 	void VTable0x40(undefined4) override;                                           // vtable+0x40
 	void VTable0x44(undefined4) override;                                           // vtable+0x44
 	void VTable0x48(undefined4) override;                                           // vtable+0x48
+	virtual void VTable0x4c(undefined4) = 0;                                        // vtable+0x4c
 	virtual undefined4 VTable0x50();                                                // vtable+0x50
 	virtual void VTable0x54();                                                      // vtable+0x54
 	virtual void VTable0x58();                                                      // vtable+0x58
@@ -44,7 +49,11 @@ public:
 	virtual void VTable0x7c();                                                      // vtable+0x7c
 
 protected:
-	undefined m_unk0x04[0x280 - 4]; // 0x04
+	undefined m_unk0x04[4];           // 0x04
+	CeruleanEmperor0x50 m_unk0x08;    // 0x08
+	CeruleanQueen0x58 m_unk0x58;      // 0x58
+	undefined m_unk0xb0[0xd8 - 0xb0]; // 0xb0
+	ObscureIcon0x1a8 m_unk0xd8;       // 0xd8
 };
 
 #endif // IMAGINARYNOTION0X280_H
