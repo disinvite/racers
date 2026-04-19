@@ -54,9 +54,11 @@ LegoS32 GolDrawState::VTable0x44(LegoU32 p_width, LegoU32 p_height, LegoU32 p_bp
 	return 0;
 }
 
-// FUNCTION: GOLDP 0x1002c010 FOLDED
+// STUB: GOLDP 0x1002c010 FOLDED
 void GolDrawState::VTable0x0c(const char* p_driverName, const char* p_deviceName)
 {
+	// TODO (empty)
+	STUB(0x1002c010);
 }
 
 // STUB: GOLDP 0x100016f0 FOLDED
@@ -137,9 +139,11 @@ LegoBool32 GolDrawState::VTable0x28(LegoU32 p_driverIndex, LegoU32 p_deviceIndex
 	return FALSE;
 }
 
-// FUNCTION: GOLDP 0x1002c010 FOLDED
+// STUB: GOLDP 0x1002c010 FOLDED
 void GolDrawState::VTable0x30(LegoU32 p_driverIndex, GUID* p_guid)
 {
+	// TODO (empty)
+	STUB(0x1002c010);
 }
 
 // FUNCTION: GOLDP 0x100294f0 FOLDED
