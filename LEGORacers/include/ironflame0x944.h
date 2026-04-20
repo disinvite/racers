@@ -26,8 +26,12 @@ public:
 	void UnloadGolLibrary() override;                     // vtable+0x18
 	void InitInput() override;                            // vtable+0x1c
 	void VTable0x20() override;                           // vtable+0x20
-	LegoS32 VTable0x24(LegoU32 p_width, LegoU32 p_height, LegoU32 p_bpp,
-					   LegoU32 p_flags) override; // vtable+0x24
+	LegoS32 InitializeDisplay(
+		LegoU32 p_width,
+		LegoU32 p_height,
+		LegoU32 p_bpp,
+		LegoU32 p_flags
+	) override; // vtable+0x24
 	void VTable0x28(
 		LegoU32 p_width,
 		LegoU32 p_height,
