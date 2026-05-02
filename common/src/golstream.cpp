@@ -204,10 +204,10 @@ LegoS32 GolStream::BufferedOpen(const LegoChar* p_fileName, LegoS32 p_mode, Lego
 		result = Open(g_pathBuffer);
 	}
 	else {
-		LegoU32 i = 0;
 		result = e_ioFileNotFound;
+		LegoU32 i = 0;
 
-		while (TRUE) {
+		while (result == e_ioFileNotFound) {
 			if (i >= g_searchPathCount) {
 				break;
 			}
@@ -215,41 +215,36 @@ LegoS32 GolStream::BufferedOpen(const LegoChar* p_fileName, LegoS32 p_mode, Lego
 			BuildPathname(g_searchPaths[i], p_fileName);
 			result = Open(g_pathBuffer);
 			++i;
-
-			if (result != e_ioFileNotFound) {
-				break;
-			}
 		}
 	}
 
-	if (result) {
+	if (result == e_ioSuccess) {
+		m_flags = c_flagOpen;
+
+		if (!(p_mode & c_modeKeepBuffer) || !m_buffer) {
+			if (m_buffer) {
+				delete m_buffer;
+				m_buffer = NULL;
+			}
+
+			if (p_bufferSize) {
+				p_bufferSize = (p_bufferSize & 1) + p_bufferSize;
+				LegoU8* newBuf = new LegoU8[p_bufferSize];
+				m_buffer = newBuf;
+
+				if (!newBuf) {
+					Dispose();
+					GolFsUnlock();
+					return e_ioOutOfMemory;
+				}
+			}
+
+			m_bufferCapacity = p_bufferSize;
+		}
+	}
+	else {
 		GolFsUnlock();
 		return result;
-	}
-
-	m_flags = c_flagOpen;
-
-	if (!(p_mode & c_modeKeepBuffer) || !m_buffer) {
-		if (m_buffer) {
-			delete m_buffer;
-			m_buffer = NULL;
-		}
-
-		LegoU32 bufSize = p_bufferSize;
-
-		if (bufSize) {
-			bufSize = (bufSize & 1) + bufSize;
-			LegoU8* newBuf = new LegoU8[bufSize];
-			m_buffer = newBuf;
-
-			if (!newBuf) {
-				Dispose();
-				GolFsUnlock();
-				return e_ioOutOfMemory;
-			}
-		}
-
-		m_bufferCapacity = bufSize;
 	}
 
 	GolFsUnlock();
