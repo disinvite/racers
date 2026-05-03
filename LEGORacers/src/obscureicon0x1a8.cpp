@@ -29,9 +29,10 @@ void ObscureIcon0x1a8::VTable0x00()
 }
 
 // STUB: LEGORACERS 0x00471ea0
-void ObscureIcon0x1a8::VTable0x08()
+undefined4 ObscureIcon0x1a8::VTable0x08()
 {
 	STUB(0x00471ea0);
+	return 0;
 }
 
 // STUB: LEGORACERS 0x00472680
