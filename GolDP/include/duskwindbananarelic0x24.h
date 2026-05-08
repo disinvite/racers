@@ -4,8 +4,11 @@
 #include "decomp.h"
 #include "types.h"
 
-// SIZE 0x08
+class WhiteFalcon0x140;
+
+// SIZE 0x04
 struct DuskwindBananaRelicColor {
+	DuskwindBananaRelicColor() {}
 	DuskwindBananaRelicColor(undefined4 p_arg0, undefined4 p_arg1, undefined4 p_arg2, undefined4 p_arg3)
 	{
 		m_unk0x0 = p_arg0;
@@ -19,12 +22,33 @@ struct DuskwindBananaRelicColor {
 	undefined m_unk0x3; // 0x3
 };
 
+// SIZE 0x14
+struct DuskWindBananaRelicParams {
+	DuskWindBananaRelicParams() {}
+	DuskWindBananaRelicParams(LegoU8 p_fullIntensity);
+
+	LegoU32 m_unk0x00;
+	undefined4* m_unk0x04;
+	DuskwindBananaRelicColor m_unk0x08;
+	DuskwindBananaRelicColor m_unk0x0c;
+	undefined m_unk0x10;
+	undefined m_unk0x11;
+	undefined m_unk0x12;
+	undefined m_unk0x13;
+};
+
+// SIZE 0x8
+struct DuskWindName0x8 {
+	LegoChar m_unk0x0[8];
+};
+
 // VTABLE: GOLDP 0x10057030
 // SIZE 0x24
 class DuskwindBananaRelic0x24 {
 public:
 	enum {
 		c_flagBit0 = 1 << 0,
+		c_flagBit7 = 1 << 7,
 		c_flagBit8 = 1 << 8,
 		c_flagBit9 = 1 << 9,
 		c_flagBit11 = 1 << 11,
@@ -49,6 +73,11 @@ public:
 		c_flag0x08Bit14 = 1 << 14,
 		c_flag0x08Bit15 = 1 << 15,
 		c_flag0x08Bit16 = 1 << 16,
+		c_flag0x08Bit17 = 1 << 17,
+		c_flag0x08Bit19 = 1 << 19,
+		c_flag0x08Bit20 = 1 << 20,
+		c_flag0x08Bit21 = 1 << 21,
+		c_flag0x08Bit22 = 1 << 22,
 	};
 
 	DuskwindBananaRelic0x24();
@@ -65,17 +94,43 @@ public:
 	// SYNTHETIC: GOLDP 0x100257b0
 	// DuskwindBananaRelic0x24::`scalar deleting destructor'
 
+	void FUN_100257e0(WhiteFalcon0x140*, const DuskWindBananaRelicParams&);
+
+	friend class AmberHaze0x1c;
+
 protected:
 	undefined4* m_unk0x04;
 	LegoU32 m_unk0x08;
 	DuskwindBananaRelicColor m_unk0x0c;
 	DuskwindBananaRelicColor m_unk0x10;
 	undefined4 m_unk0x14;
-	undefined m_unk0x18[0x20 - 0x18];
+	DuskWindName0x8 m_unk0x18;
 	undefined m_unk0x20;
 	undefined m_unk0x21;
 	undefined m_unk0x22;
 	undefined m_unk0x23;
 };
+
+inline DuskWindBananaRelicParams::DuskWindBananaRelicParams(LegoU8 p_fullIntensity)
+{
+	m_unk0x0c.m_unk0x0 = p_fullIntensity;
+	m_unk0x0c.m_unk0x1 = p_fullIntensity;
+	m_unk0x0c.m_unk0x2 = p_fullIntensity;
+	m_unk0x0c.m_unk0x3 = p_fullIntensity;
+	m_unk0x08.m_unk0x0 = p_fullIntensity;
+	m_unk0x08.m_unk0x1 = p_fullIntensity;
+	m_unk0x08.m_unk0x2 = p_fullIntensity;
+	m_unk0x08.m_unk0x3 = p_fullIntensity;
+	m_unk0x00 = DuskwindBananaRelic0x24::c_flag0x08Bit2 | DuskwindBananaRelic0x24::c_flag0x08Bit4 |
+				DuskwindBananaRelic0x24::c_flag0x08Bit7 | DuskwindBananaRelic0x24::c_flag0x08Bit9 |
+				DuskwindBananaRelic0x24::c_flag0x08Bit10 | DuskwindBananaRelic0x24::c_flag0x08Bit13 |
+				DuskwindBananaRelic0x24::c_flag0x08Bit15 | DuskwindBananaRelic0x24::c_flag0x08Bit20 |
+				DuskwindBananaRelic0x24::c_flag0x08Bit22;
+	m_unk0x04 = NULL;
+	m_unk0x10 = 2;
+	m_unk0x11 = 0;
+	m_unk0x12 = 1;
+	m_unk0x13 = 0;
+}
 
 #endif // DUSKWINDBANANARELIC0x24_H
