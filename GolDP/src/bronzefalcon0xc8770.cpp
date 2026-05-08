@@ -4,8 +4,10 @@
 #include "bronzefalconsurface0x5c.h"
 #include "falcondunebag0x10.h"
 #include "falcontextureformat.h"
+#include "golddune0x38.h"
 #include "goldrawdpstate.h"
 #include "golerror.h"
+#include "purpledune0x7c.h"
 #include "rectangle.h"
 
 #include <stdio.h>
@@ -503,10 +505,21 @@ void BronzeFalcon0xc8770::VTable0x20(AmberLens0x344* p_lens)
 	p_lens->FUN_10001f60(this);
 }
 
-// STUB: GOLDP 0x100087e0
+// FUNCTION: GOLDP 0x100087e0
 void BronzeFalcon0xc8770::VTable0x5c()
 {
-	STUB(0x100087e0);
+	AmberLens0x344* lens = m_unk0x0c;
+	lens->VTable0x28();
+	lens->FUN_10002860(&m_viewportParams);
+
+	if (!(m_unk0x04 & c_flagBit16) && m_d3dViewport->SetViewport2(&m_viewportParams) != D3D_OK) {
+		GOL_FATALERROR_MESSAGE("Unable to set viewport");
+	}
+
+	m_unk0xc8490 = lens->m_unk0x120.m_unk0x190;
+	m_unk0xc8494 = lens->m_unk0x120.m_unk0x1d0;
+	::memcpy(m_unk0x4c, lens->m_unk0x34, sizeof(m_unk0x4c));
+	::memcpy(m_unk0xc8400, &lens->m_unk0x120.m_unk0x210, sizeof(m_unk0xc8400));
 }
 
 // STUB: GOLDP 0x10008910
@@ -782,11 +795,16 @@ const SlatePeak0x58* BronzeFalcon0xc8770::GetRenderTargetInfo()
 	return m_renderTargetInfo;
 }
 
-// STUB: GOLDP 0x10009960
-undefined4 BronzeFalcon0xc8770::VTable0x7c(UtopianPan0xa4*, undefined4, Rect*, Rect*, undefined4)
+// FUNCTION: GOLDP 0x10009960
+undefined4 BronzeFalcon0xc8770::VTable0x7c(
+	UtopianPan0xa4* p_image,
+	undefined4 p_unk0x08,
+	Rect* p_destRect,
+	Rect* p_sourceRect,
+	undefined4 p_unk0x14
+)
 {
-	STUB(0x10009960);
-	return 0;
+	return p_image->FUN_10005510(this, p_unk0x08, p_destRect, p_sourceRect, p_unk0x14);
 }
 
 // STUB: GOLDP 0x10009990
@@ -1363,17 +1381,47 @@ void BronzeFalcon0xc8770::FUN_1000a950(DuskwindBananaRelic0x24* p_material)
 	STUB(0x1000a950);
 }
 
-// STUB: GOLDP 0x1000ac00
-void BronzeFalcon0xc8770::FUN_1000ac00(undefined4*)
+// FUNCTION: GOLDP 0x1000ac00
+void BronzeFalcon0xc8770::FUN_1000ac00(GoldDune0x38* p_texture)
 {
-	// FIXME
-	STUB(0x1000ac00);
+	if (m_unk0xc83a8 == p_texture) {
+		return;
+	}
+
+	m_unk0xc83a8 = p_texture;
+	if (m_unk0xc83c4) {
+		if (p_texture != NULL) {
+			m_unk0xc83b0 = ~((p_texture->GetHeight() * p_texture->GetWidth() * 2) - 1);
+		}
+		return;
+	}
+
+	if (p_texture != NULL) {
+		if (p_texture->GetUnk0x36() & GoldDune0x38::c_unk0x36Bit5) {
+			if (m_unk0xc83f0 == 0) {
+				m_d3dDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE, TRUE);
+				m_unk0xc83f0 = TRUE;
+			}
+		}
+		else if (m_unk0xc83f0 != 0) {
+			m_d3dDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE, FALSE);
+			m_unk0xc83f0 = FALSE;
+		}
+
+		m_d3dDevice->SetTexture(0, static_cast<PurpleDune0x7c*>(m_unk0xc83a8)->GetDirect3DTexture());
+	}
+	else if (m_unk0xc83f0 != 0) {
+		m_d3dDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE, FALSE);
+		m_unk0xc83f0 = FALSE;
+	}
 }
 
-// STUB: GOLDP 0x1000aeb0
-void BronzeFalcon0xc8770::SetAlphaOverride(undefined4, undefined4)
+// FUNCTION: GOLDP 0x1000aeb0
+void BronzeFalcon0xc8770::SetAlphaOverride(undefined4 p_alpha, undefined4 p_flags)
 {
-	STUB(0x1000aeb0);
+	WhiteFalcon0x140::SetAlphaOverride(p_alpha, p_flags);
+	m_unk0xc83e0 = p_alpha;
+	m_unk0xc83fc = (m_unk0xc83fc & 0x00ffffff) | (p_alpha << 24);
 }
 
 // FUNCTION: GOLDP 0x1000aef0
@@ -1392,7 +1440,7 @@ void BronzeFalcon0xc8770::VTable0xc0(const ColorRGBA& p_color)
 	m_unk0xc83fc = ARGBU32(m_unk0xc83e0, p_color.m_red, p_color.m_grn, p_color.m_blu);
 }
 
-// STUB: GOLDP 0x1000af70
+// FUNCTION: GOLDP 0x1000af70
 void BronzeFalcon0xc8770::VTable0xc4()
 {
 	WhiteFalcon0x140::VTable0xc4();
@@ -1483,28 +1531,36 @@ void BronzeFalcon0xc8770::VTable0x60()
 	}
 }
 
-// STUB: GOLDP 0x1000b240
+// FUNCTION: GOLDP 0x1000b240
 void BronzeFalcon0xc8770::VTable0xc8()
 {
-	STUB(0x1000b240);
+	if (!m_unk0xc83c4) {
+		m_d3dDevice->SetRenderState(D3DRENDERSTATE_FILLMODE, D3DFILL_WIREFRAME);
+	}
 }
 
-// STUB: GOLDP 0x1000b260
+// FUNCTION: GOLDP 0x1000b260
 void BronzeFalcon0xc8770::VTable0xcc()
 {
-	STUB(0x1000b260);
+	if (!m_unk0xc83c4) {
+		m_d3dDevice->SetRenderState(D3DRENDERSTATE_FILLMODE, D3DFILL_SOLID);
+	}
 }
 
-// STUB: GOLDP 0x1000b280
-void BronzeFalcon0xc8770::VTable0x3c(undefined4)
+// FUNCTION: GOLDP 0x1000b280
+void BronzeFalcon0xc8770::VTable0x3c(LegoU32 p_arg)
 {
-	STUB(0x1000b280);
+	m_unk0x04 |= c_flagBit17;
+	m_unk0xc8704 = p_arg;
+	if (m_unk0xc8704 > 4) {
+		m_unk0xc8704 = 4;
+	}
 }
 
-// STUB: GOLDP 0x1000b2b0
+// FUNCTION: GOLDP 0x1000b2b0
 void BronzeFalcon0xc8770::VTable0x40()
 {
-	STUB(0x1000b2b0);
+	m_unk0x04 &= ~c_flagBit17;
 }
 
 // FUNCTION: GOLDP 0x1000b2c0
@@ -1521,16 +1577,76 @@ SlatePeak0x58* BronzeFalcon0xc8770::VTable0x4c(undefined2 p_arg1, undefined2 p_a
 	return surface;
 }
 
-// STUB: GOLDP 0x1000b350
-void BronzeFalcon0xc8770::VTable0x50(undefined4)
+// FUNCTION: GOLDP 0x1000b350
+void BronzeFalcon0xc8770::VTable0x50(SlatePeak0x58* p_surface)
 {
-	STUB(0x1000b350);
+	BronzeFalconSurface0x5c* surface = m_unk0x30c;
+	if (surface == NULL) {
+		return;
+	}
+
+	BronzeFalconSurface0x5c* target = static_cast<BronzeFalconSurface0x5c*>(p_surface);
+	if (target == surface) {
+		m_unk0x30c = surface->m_next;
+		target->VTable0x34();
+		delete target;
+		return;
+	}
+
+	BronzeFalconSurface0x5c* previous = surface;
+	surface = surface->m_next;
+	if (surface == NULL) {
+		return;
+	}
+
+	while (surface != NULL) {
+		if (surface == target) {
+			previous->m_next = surface->m_next;
+			surface->m_next = NULL;
+			target->VTable0x34();
+			delete target;
+			return;
+		}
+
+		previous = surface;
+		surface = surface->m_next;
+	}
 }
 
-// STUB: GOLDP 0x1000b3d0
-void BronzeFalcon0xc8770::VTable0x58(undefined4, undefined4)
+// FUNCTION: GOLDP 0x1000b3d0
+void BronzeFalcon0xc8770::VTable0x58(SlatePeak0x58* p_surface, undefined4 p_flags)
 {
-	STUB(0x1000b3d0);
+	m_renderTargetInfo = m_unk0x304;
+	BronzeFalconSurface0x5c* surface = m_unk0x30c;
+	if (surface != NULL) {
+		BronzeFalconSurface0x5c* target = static_cast<BronzeFalconSurface0x5c*>(p_surface);
+		while (surface != NULL) {
+			if (surface == target) {
+				m_renderTargetInfo = surface;
+				if (!m_unk0xc83c4 && m_d3dDevice->SetRenderTarget(m_renderTargetInfo->m_renderSurface, 0) != D3D_OK) {
+					GOL_FATALERROR_MESSAGE("Unable to set secondary rendering target");
+				}
+
+				Rect rect;
+				rect.m_left = 0;
+				rect.m_top = 0;
+				rect.m_right = m_renderTargetInfo->m_width;
+				rect.m_bottom = m_renderTargetInfo->m_height;
+
+				VTable0x20(m_unk0x0c);
+				m_unk0x0c->VTable0x0c(&rect);
+				VTable0x54(p_flags);
+				return;
+			}
+
+			surface = surface->m_next;
+		}
+
+		VTable0x54(p_flags);
+		return;
+	}
+
+	VTable0x54(p_flags);
 }
 
 // STUB: GOLDP 0x100016f0 FOLDED
