@@ -21,18 +21,18 @@ struct GolVec3 {
 	GolVec3 operator+(const GolVec3& p_rhs) const
 	{
 		GolVec3 result;
-		result.m_x = this->m_x + p_rhs.m_x;
-		result.m_y = this->m_y + p_rhs.m_y;
-		result.m_z = this->m_z + p_rhs.m_z;
+		result.m_x = m_x + p_rhs.m_x;
+		result.m_y = m_y + p_rhs.m_y;
+		result.m_z = m_z + p_rhs.m_z;
 		return result;
 	}
 
 	GolVec3 operator-(const GolVec3& p_rhs) const
 	{
 		GolVec3 result;
-		result.m_x = this->m_x - p_rhs.m_x;
-		result.m_y = this->m_y - p_rhs.m_y;
-		result.m_z = this->m_z - p_rhs.m_z;
+		result.m_x = m_x - p_rhs.m_x;
+		result.m_y = m_y - p_rhs.m_y;
+		result.m_z = m_z - p_rhs.m_z;
 		return result;
 	}
 
@@ -62,6 +62,14 @@ struct GolVec3 {
 	}
 };
 
+// SIZE 0x10
+struct GolVec4 {
+	LegoFloat m_x;
+	LegoFloat m_y;
+	LegoFloat m_z;
+	LegoFloat m_u;
+};
+
 inline GolVec3 operator*(LegoFloat p_f, const GolVec3& p_rhs)
 {
 	GolVec3 result;
@@ -79,18 +87,29 @@ struct GolQuat {
 	LegoFloat m_w;
 };
 
+// SIZE 0x40
+struct GolMatrix4 {
+	LegoFloat m_m[4][4];
+};
+
 class GolMath {
 public:
-	static void FUN_1002f3a0(const D3DMATRIX* p_left, const LegoFloat* p_right, LegoFloat* p_dest);
-	static void FUN_1002f450(const LegoFloat* p_left, const LegoFloat* p_right, LegoFloat* p_dest);
+	static LegoFloat QuatDot(const GolQuat& p_left, const GolQuat& p_right)
+	{
+		return p_left.m_x * p_right.m_x + p_left.m_y * p_right.m_y + p_left.m_z * p_right.m_z +
+			   p_left.m_w * p_right.m_w;
+	}
+
+	static void FUN_1002f3a0(const GolMatrix4& p_left, const GolMatrix4& p_right, GolMatrix4* p_dest);
+	static void FUN_1002f450(const GolMatrix4& p_left, const GolMatrix4& p_right, GolMatrix4* p_dest);
 	static void FUN_00449170(LegoFloat p_angle, LegoFloat* p_sin, LegoFloat* p_cos);
 	static void FUN_00449190(const LegoFloat* p_left, const LegoFloat* p_right, LegoFloat* p_dest);
 	static void __fastcall NormalizeVector2(const GolVec2& p_src, GolVec2& p_dest);
 	static void __fastcall NormalizeVector3(const GolVec3& p_src, GolVec3& p_dest);
 	static void FUN_00449340(const GolQuat* p_quat, LegoFloat* p_dest);
-	static void FUN_1002f5a0(const LegoFloat* p_matrix, GolQuat* p_dest);
-	static void FUN_1002f720(const LegoFloat* p_matrix, GolQuat* p_dest);
-	static void FUN_1002f890(const GolQuat* p_from, const GolQuat* p_to, LegoFloat p_amount, GolQuat* p_dest);
+	static void FUN_1002f5a0(const GolMatrix4& p_matrix, GolQuat* p_dest);
+	static void FUN_1002f720(const GolMatrix4& p_matrix, GolQuat* p_dest);
+	static void FUN_1002f890(const GolQuat& p_from, const GolQuat& p_to, LegoFloat p_amount, GolQuat* p_dest);
 	static void FUN_004496a0(const GolVec3* p_src, GolVec3* p_dest, const GolVec3* p_axis, LegoFloat p_angle);
 	static LegoBool32 FUN_004497f0(const GolVec3* p_point, const LegoFloat* p_triangle);
 	static LegoBool32 FUN_00449a90(

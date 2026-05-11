@@ -9,21 +9,21 @@ DECOMP_SIZE_ASSERT(AmberLens0x344, 0x344)
 AmberLens0x344::AmberLens0x344()
 {
 	m_unk0x04 = &m_unk0x120;
-	m_unk0x340 = NULL;
+	m_renderer = NULL;
 }
 
 // FUNCTION: GOLDP 0x10001f00
 AmberLens0x344::~AmberLens0x344()
 {
-	if (m_unk0x340) {
-		m_unk0x340->VTable0x24();
+	if (m_renderer) {
+		m_renderer->VTable0x24();
 	}
 }
 
 // FUNCTION: GOLDP 0x10001f60
 void AmberLens0x344::FUN_10001f60(BronzeFalcon0xc8770* p_renderer)
 {
-	m_unk0x340 = p_renderer;
+	m_renderer = p_renderer;
 	if (p_renderer != NULL) {
 		const SlatePeak0x58* renderTargetInfo = p_renderer->GetRenderTargetInfo();
 		if (m_unk0x11c == 0 || m_unk0x118 == 0) {
@@ -47,10 +47,34 @@ void AmberLens0x344::FUN_10001f60(BronzeFalcon0xc8770* p_renderer)
 	}
 }
 
-// STUB: GOLDP 0x10002060
+// FUNCTION: GOLDP 0x10002060
 void AmberLens0x344::VTable0x28()
 {
-	STUB(0x10002060);
+	if (m_flags & (c_flagBit0 | c_flagBit1)) {
+		if (m_flags & c_flagBit1) {
+			if (!(m_flags & c_flagBit3)) {
+				LegoFloat width = static_cast<LegoFloat>(m_unk0x118 - m_unk0x110);
+				LegoFloat height = static_cast<LegoFloat>(m_unk0x11c - m_unk0x114);
+				m_unk0x0c = width / height;
+			}
+
+			m_unk0x120.m_unk0x210 = static_cast<LegoFloat>(m_unk0x118 - m_unk0x110);
+			m_unk0x120.m_unk0x214 = static_cast<LegoFloat>(m_unk0x11c - m_unk0x114);
+			m_unk0x120.m_unk0x218 = static_cast<LegoFloat>(m_unk0x110);
+			m_unk0x120.m_unk0x21c = static_cast<LegoFloat>(m_unk0x114);
+		}
+
+		if (m_flags & c_flagBit0) {
+			VTable0x00();
+		}
+
+		if (m_flags & c_flagBit1) {
+			VTable0x04();
+		}
+
+		GolMath::FUN_1002f3a0(m_unk0x120.m_unk0xd0, m_unk0x120.m_unk0x110, &m_unk0x120.m_unk0x190);
+		GolMath::FUN_1002f3a0(m_unk0x120.m_unk0xd0, m_unk0x120.m_unk0x150, &m_unk0x120.m_unk0x1d0);
+	}
 }
 
 // STUB: GOLDP 0x10002160
@@ -104,7 +128,7 @@ void AmberLens0x344::VTable0x20(undefined4, undefined4)
 // FUNCTION: GOLDP 0x10002860
 void AmberLens0x344::FUN_10002860(D3DVIEWPORT2* p_viewport)
 {
-	const SlatePeak0x58* renderTargetInfo = m_unk0x340->GetRenderTargetInfo();
+	const SlatePeak0x58* renderTargetInfo = m_renderer->GetRenderTargetInfo();
 	p_viewport->dwX = 0;
 	p_viewport->dwY = 0;
 	p_viewport->dwWidth = renderTargetInfo->GetWidth();

@@ -24,7 +24,7 @@ void AquaCoral0x37b8::FUN_0042b130(LegoRacers::Context* p_context)
 		GolFatalError(c_golErrorOutOfMemory, NULL, 0);
 	}
 
-	g_unk0x4c4914->FUN_0042c280(p_context);
+	g_unk0x4c4914->Initialize(p_context);
 	g_unk0x4c4914->Run();
 	g_unk0x4c4914->Shutdown();
 
@@ -46,7 +46,7 @@ AquaCoral0x37b8::~AquaCoral0x37b8()
 }
 
 // FUNCTION: LEGORACERS 0x0042c280
-LegoS32 AquaCoral0x37b8::FUN_0042c280(LegoRacers::Context* p_context)
+LegoS32 AquaCoral0x37b8::Initialize(LegoRacers::Context* p_context)
 {
 	m_context = p_context;
 	m_context->m_unk0x1e &= ~LegoRacers::Context::c_flagBit3;
@@ -126,11 +126,11 @@ void AquaCoral0x37b8::ReleaseContextAssets()
 				slot.m_unk0x20 = NULL;
 			}
 			if (slot.m_unk0x24) {
-				golExport->VTable0x44(slot.m_unk0x24);
+				golExport->DestroyMaterialList(slot.m_unk0x24);
 				slot.m_unk0x24 = NULL;
 			}
 			if (slot.m_unk0x28) {
-				golExport->VTable0x40(slot.m_unk0x28);
+				golExport->DestroyTextureList(slot.m_unk0x28);
 				slot.m_unk0x28 = NULL;
 			}
 			if (slot.m_unk0x44) {
@@ -138,11 +138,11 @@ void AquaCoral0x37b8::ReleaseContextAssets()
 				slot.m_unk0x44 = NULL;
 			}
 			if (slot.m_unk0x48) {
-				golExport->VTable0x44(slot.m_unk0x48);
+				golExport->DestroyMaterialList(slot.m_unk0x48);
 				slot.m_unk0x48 = NULL;
 			}
 			if (slot.m_unk0x4c) {
-				golExport->VTable0x40(slot.m_unk0x4c);
+				golExport->DestroyTextureList(slot.m_unk0x4c);
 				slot.m_unk0x4c = NULL;
 			}
 		}

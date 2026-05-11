@@ -8,7 +8,7 @@ DECOMP_SIZE_ASSERT(BronzeDune0x4c, 0x4c)
 BronzeDune0x4c g_bronzeDune0x4c;
 
 // STUB: GOLDP 0x10004f80
-void BronzeDune0x4c::VTable0x30(WhiteFalcon0x140& p_renderer, MoonlitCanvas0x5b0* p_source)
+void BronzeDune0x4c::VTable0x30(WhiteFalcon0x140& p_renderer, GolImgFile* p_source)
 {
 	GoldDune0x38::VTable0x30(p_renderer, p_source);
 }
@@ -27,7 +27,7 @@ BronzeDune0x4c::~BronzeDune0x4c()
 // FUNCTION: GOLDP 0x1002a3e0
 void BronzeDune0x4c::VTable0x34(
 	WhiteFalcon0x140& p_renderer,
-	const FalconTextureFormat& p_textureFormat,
+	const GolSurfaceFormat& p_textureFormat,
 	LegoU32 p_width,
 	LegoU32 p_height
 )
@@ -40,7 +40,7 @@ void BronzeDune0x4c::VTable0x34(
 	m_height = static_cast<LegoU16>(p_height);
 	m_textureFormat = p_textureFormat;
 	if (p_textureFormat.m_paletteMask) {
-		m_unk0x40.FUN_1002a120(p_textureFormat);
+		m_unk0x40.Initialize(p_textureFormat);
 	}
 	LegoU16 pitch = (p_textureFormat.m_bitsPerPixel * p_width + 8 - 1) / 8U;
 	m_pitch = static_cast<LegoU16>(pitch);
@@ -53,7 +53,7 @@ void BronzeDune0x4c::VTable0x34(
 // FUNCTION: GOLDP 0x1002a470
 void BronzeDune0x4c::VTable0x38()
 {
-	m_unk0x40.FUN_1002a1b0();
+	m_unk0x40.Shutdown();
 	if (m_pixels != NULL) {
 		delete[] m_pixels;
 		m_pixels = NULL;

@@ -82,7 +82,7 @@ public:
 	// SYNTHETIC: LEGORACERS 0x0044c940
 	// GolStream::`scalar deleting destructor'
 
-	void Init();
+	void Initialize();
 	LegoS32 OpenFileSource();
 
 	static LegoS32 FindFile(const LegoChar* p_fileName);
@@ -97,6 +97,8 @@ public:
 	static void BuildPathname(const LegoChar* p_prefix, const LegoChar* p_path);
 	LegoU32 GetFlags() const { return m_flags; }
 	LegoS32 GetSize() { return m_size; }
+
+	LegoBool IsOpen() const { return m_flags & c_flagOpen; }
 
 protected:
 	LegoU32 m_mode;           // 0x04

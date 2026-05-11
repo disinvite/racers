@@ -55,7 +55,7 @@ void RaceDefinitionList::RaceDefinition::Load(
 	while ((token = p_parser.GetNextToken()) != GolFileParser::e_rightCurly) {
 		switch (token) {
 		case c_tokenCourseList:
-			m_courseCount = p_parser.FUN_100327e0();
+			m_courseCount = p_parser.ReadBracketedCountAndLeftCurly();
 
 			for (i = 0; i < m_courseCount; i++) {
 				::strncpy(
@@ -128,9 +128,8 @@ void RaceDefinitionList::Load(GolStringTable* p_stringTable, const LegoChar* p_f
 	parser->OpenFileForRead(p_fileName);
 	parser->AssertNextTokenIs(static_cast<GolFileParser::ParserTokenType>(c_tokenRaceDefinition));
 
-	LegoU32 entryCount = parser->FUN_100327e0();
-	m_entryCount = entryCount;
-	m_entries = new RaceDefinition[entryCount];
+	m_entryCount = parser->ReadBracketedCountAndLeftCurly();
+	m_entries = new RaceDefinition[m_entryCount];
 
 	if (m_entries == NULL) {
 		GOL_FATALERROR(c_golErrorOutOfMemory);

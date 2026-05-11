@@ -1,7 +1,7 @@
 #include "falcondunebag0x10.h"
 
 // GLOBAL: GOLDP 0x10063558
-FalconTextureFormat FalconDuneBag0x10::g_textureFormat;
+GolSurfaceFormat FalconDuneBag0x10::g_textureFormat;
 
 // FUNCTION: GOLDP 0x100146c0
 FalconDuneBag0x10::FalconDuneBag0x10()
@@ -29,7 +29,7 @@ void FalconDuneBag0x10::Destroy()
 		delete m_unk0x0c;
 		m_unk0x0c = NULL;
 	}
-	FUN_1002a1b0();
+	Shutdown();
 }
 
 // FUNCTION: GOLDP 0x10014820
@@ -37,11 +37,8 @@ void FalconDuneBag0x10::SetEntries(ColorRGBA* p_entries, LegoU32 p_start, LegoU3
 {
 	BronzeDuneBag0xc::SetEntries(p_entries, p_start, p_count);
 
-	while (p_count > 0) {
-		m_unk0x0c[p_start] = g_textureFormat.MapRGBA(*p_entries);
-		p_start++;
-		p_entries++;
-		p_count--;
+	for (LegoU32 i = 0; i < p_count; i++) {
+		m_unk0x0c[p_start + i] = g_textureFormat.MapRGBA(p_entries[i]);
 	}
 }
 
@@ -58,7 +55,7 @@ void FalconDuneBag0x10::CopyEntriesFrom(IPalette0x4* p_source)
 }
 
 // FUNCTION: GOLDP 0x100148c0
-void FalconDuneBag0x10::SetTextureFormat(const FalconTextureFormat& p_format)
+void FalconDuneBag0x10::SetTextureFormat(const GolSurfaceFormat& p_format)
 {
 	g_textureFormat = p_format;
 }

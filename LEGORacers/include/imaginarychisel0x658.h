@@ -44,7 +44,7 @@ public:
 
 	ImaginaryChisel0x658();
 	~ImaginaryChisel0x658() override;           // vtable+0x68
-	LegoBool32 VTable0x74() override;           // vtable+0x74
+	LegoBool32 Destroy() override;              // vtable+0x74
 	LegoBool32 VTable0x78(undefined4) override; // vtable+0x78
 	void VTable0x84() override;                 // vtable+0x84
 	LegoBool32 VTable0x8c(MenuToolContext0x4bc8*,
@@ -56,7 +56,7 @@ public:
 protected:
 	HelperAt0x368 m_unk0x368;        // 0x368
 	GolStringTable m_unk0x638;       // 0x638
-	BronzeFalcon0xc8770* m_unk0x64c; // 0x64c
+	BronzeFalcon0xc8770* m_renderer; // 0x64c
 	AmberLens0x344* m_unk0x650;      // 0x650
 	undefined4 m_unk0x654;           // 0x654
 };

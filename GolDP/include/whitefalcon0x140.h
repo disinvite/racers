@@ -3,8 +3,8 @@
 
 #include "color.h"
 #include "decomp.h"
-#include "falcontextureformat.h"
 #include "golmath.h"
+#include "golsurfaceformat.h"
 #include "silverdune0x30.h"
 #include "types.h"
 
@@ -13,7 +13,7 @@ class AmberLens0x344;
 class BronzeFalcon0xc8770;
 class CinderBasin0x28;
 class DuskwindBananaRelic0x24;
-class FalconTextureFormat;
+class GolSurfaceFormat;
 class GolFont0xa0;
 class GolFontBase0x40;
 class GolCommonDrawState;
@@ -78,8 +78,8 @@ public:
 	virtual void ReleaseResources();    // vtable+0x04
 	virtual ~WhiteFalcon0x140();        // vtable+0x08
 	virtual void SelectTextureFormat(
-		const FalconTextureFormat& p_requestedTextureFormat,
-		FalconTextureFormat* p_actualTextureFormat,
+		const GolSurfaceFormat& p_requestedTextureFormat,
+		GolSurfaceFormat* p_actualTextureFormat,
 		LegoBool32
 	);                                                                      // vtable+0x0c
 	virtual GolCommonDrawState* GetDrawState() = 0;                         // vtable+0x10
@@ -227,13 +227,13 @@ public:
 	// SYNTHETIC: GOLDP 0x100288b0
 	// WhiteFalcon0x140::`scalar deleting destructor'
 
-	undefined4 GetUnk0x04() { return m_unk0x04; }
+	undefined4 GetFlags() { return m_flags; }
 	AmberLens0x344* GetUnk0x0c() { return m_unk0x0c; }
 
 protected:
 	friend class GolCommonDrawState;
 
-	undefined4 m_unk0x04;                         // 0x04
+	undefined4 m_flags;                           // 0x04
 	undefined2 m_unk0x08;                         // 0x08
 	undefined2 m_unk0x0a;                         // 0x0a
 	AmberLens0x344* m_unk0x0c;                    // 0x0c
@@ -246,7 +246,7 @@ protected:
 	undefined4 m_requestedPaletteBitCount;        // 0x28
 	undefined4 m_unk0x2c;                         // 0x2c
 	LegoU32 m_countTextureFormats;                // 0x30
-	FalconTextureFormat* m_textureFormats;        // 0x34
+	GolSurfaceFormat* m_textureFormats;           // 0x34
 	MagentaRibbon0x20* m_textureLists;            // 0x38
 	AmberHaze0x1c* m_materialLists;               // 0x3c
 	HypnoticNoise0x1c* m_imageLists;              // 0x40

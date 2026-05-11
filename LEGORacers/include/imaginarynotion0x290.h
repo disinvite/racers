@@ -68,15 +68,15 @@ public:
 	void VTable0x48(undefined4) override;                                             // vtable+0x48
 	virtual void VTable0x4c() = 0;                                                    // vtable+0x4c
 	virtual undefined4 VTable0x50();                                                  // vtable+0x50
-	virtual void VTable0x54();                                                        // vtable+0x54
+	virtual void Reset();                                                             // vtable+0x54
 	virtual LegoBool32 VTable0x58(MenuToolCreateParams0x30*);                         // vtable+0x58
-	virtual CeruleanEmperor0x4c* VTable0x5c();                                        // vtable+0x5c
+	virtual CeruleanEmperor0x4c* GetMenuStyles();                                     // vtable+0x5c
 	virtual void VTable0x60();                                                        // vtable+0x60
-	virtual CeruleanQueen0x58* VTable0x64();                                          // vtable+0x64
+	virtual CeruleanQueen0x58* GetMenuInputBindings();                                // vtable+0x64
 	virtual ~ImaginaryNotion0x290();                                                  // vtable+0x68
 	virtual LegoFloat VTable0x6c();                                                   // vtable+0x6c
-	virtual LegoBool32 VTable0x70(MenuToolCreateParams0x30*);                         // vtable+0x70
-	virtual LegoBool32 VTable0x74();                                                  // vtable+0x74
+	virtual LegoBool32 Initialize(MenuToolCreateParams0x30*);                         // vtable+0x70
+	virtual LegoBool32 Destroy();                                                     // vtable+0x74
 	virtual LegoBool32 VTable0x78(undefined4);                                        // vtable+0x78
 	virtual LegoBool32 VTable0x7c(Rect* p_arg1, Rect* p_arg2);                        // vtable+0x7c
 
@@ -110,24 +110,24 @@ public:
 	// ImaginaryNotion0x290::`scalar deleting destructor'
 
 protected:
-	undefined4 m_unk0x04;              // 0x004
-	CeruleanEmperor0x4c m_unk0x08;     // 0x008
-	PorcelainVeil0x50* m_unk0x54;      // 0x054
-	CeruleanQueen0x58 m_unk0x58;       // 0x058
-	GolExport* m_unk0xb4;              // 0x0b4
-	BronzeFalcon0xc8770* m_unk0xb8;    // 0x0b8
-	AwakeKite0x20* m_unk0xbc;          // 0x0bc
-	GolFontTable* m_unk0xc0;           // 0x0c0
-	FieldAt0xc4* m_unk0xc4;            // 0x0c4
-	OnyxCircularBuffer0x1c* m_unk0xc8; // 0x0c8
-	InputManager* m_unk0xcc;           // 0x0cc
-	GolStringTable* m_unk0xd0;         // 0x0d0
-	GolStringTable* m_unk0xd4;         // 0x0d4
-	ObscureIcon0x1a8 m_unk0xd8;        // 0x0d8
-	SoundGroupBinding* m_unk0x280;     // 0x280
-	CrimsonSun0xa4* m_unk0x284;        // 0x284
-	undefined4 m_unk0x288;             // 0x288
-	undefined2 m_unk0x28c;             // 0x28c
+	undefined4 m_unk0x04;                            // 0x004
+	CeruleanEmperor0x4c m_unk0x08;                   // 0x008
+	PorcelainVeil0x50* m_menuStyles;                 // 0x054
+	CeruleanQueen0x58 m_unk0x58;                     // 0x058
+	GolExport* m_golExport;                          // 0x0b4
+	BronzeFalcon0xc8770* m_renderer;                 // 0x0b8
+	AwakeKite0x20* m_unk0xbc;                        // 0x0bc
+	GolFontTable* m_fontTable;                       // 0x0c0
+	FieldAt0xc4* m_unk0xc4;                          // 0x0c4
+	OnyxCircularBuffer0x1c* m_inputBindingContainer; // 0x0c8
+	InputManager* m_inputManager;                    // 0x0cc
+	GolStringTable* m_menuNameStrings;               // 0x0d0
+	GolStringTable* m_menuTextStrings;               // 0x0d4
+	ObscureIcon0x1a8 m_unk0xd8;                      // 0x0d8
+	SoundGroupBinding* m_soundGroupBinding;          // 0x280
+	CrimsonSun0xa4* m_unk0x284;                      // 0x284
+	undefined4 m_unk0x288;                           // 0x288
+	undefined2 m_unk0x28c;                           // 0x28c
 };
 
 #endif // IMAGINARYNOTION0X290_H
