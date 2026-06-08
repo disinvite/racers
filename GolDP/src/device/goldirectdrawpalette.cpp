@@ -95,7 +95,8 @@ void GolDirectDrawPalette::CreateDirectDrawPalette(GolD3DRenderDevice* p_rendere
 	}
 	else {
 		LegoU32 paletteEntryCount = entryCount - 1;
-		for (LegoU32 paletteEntry = 0; paletteEntry < paletteEntryCount; paletteEntry++) {
+		LegoU32 paletteEntry = 0;
+		for (paletteEntry; paletteEntry < paletteEntryCount; paletteEntry++) {
 			g_paletteEntries[paletteEntry].peRed = 0;
 			g_paletteEntries[paletteEntry].peGreen = 0;
 			g_paletteEntries[paletteEntry].peBlue = 0;
