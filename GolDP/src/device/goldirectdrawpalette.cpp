@@ -73,7 +73,7 @@ void GolDirectDrawPalette::CreateDirectDrawPalette(GolD3DRenderDevice* p_rendere
 	m_entryCount = (LegoU16) entryCount;
 
 	if (p_renderer->m_unk0xc8700 == 0) {
-		for (LegoU32 systemEntry = 0; systemEntry < c_systemPaletteReservedEntries; systemEntry++) {
+		for (LegoS32 systemEntry = 0; systemEntry < c_systemPaletteReservedEntries; systemEntry++) {
 			g_paletteEntries[systemEntry].peRed = (BYTE) systemEntry;
 			g_paletteEntries[systemEntry + c_systemPaletteUpperFirst].peRed =
 				(BYTE) (systemEntry + c_systemPaletteUpperFirst);
@@ -85,7 +85,7 @@ void GolDirectDrawPalette::CreateDirectDrawPalette(GolD3DRenderDevice* p_rendere
 			g_paletteEntries[systemEntry + c_systemPaletteUpperFirst].peFlags = PC_EXPLICIT;
 		}
 
-		for (LegoU32 paletteEntry = c_systemPaletteReservedEntries; paletteEntry < c_systemPaletteUpperFirst;
+		for (LegoS32 paletteEntry = c_systemPaletteReservedEntries; paletteEntry < c_systemPaletteUpperFirst;
 			 paletteEntry++) {
 			g_paletteEntries[paletteEntry].peRed = c_colorChannelMax;
 			g_paletteEntries[paletteEntry].peGreen = 0;
@@ -95,21 +95,17 @@ void GolDirectDrawPalette::CreateDirectDrawPalette(GolD3DRenderDevice* p_rendere
 	}
 	else {
 		LegoU32 paletteEntryCount = entryCount - 1;
-		LegoU32 lastEntry = 0;
-		if (paletteEntryCount > 0) {
-			lastEntry = paletteEntryCount;
-			for (LegoU32 paletteEntry = 0; paletteEntry < paletteEntryCount; paletteEntry++) {
-				g_paletteEntries[paletteEntry].peRed = 0;
-				g_paletteEntries[paletteEntry].peGreen = 0;
-				g_paletteEntries[paletteEntry].peBlue = 0;
-				g_paletteEntries[paletteEntry].peFlags = PC_NOCOLLAPSE;
-			}
+		for (LegoU32 paletteEntry = 0; paletteEntry < paletteEntryCount; paletteEntry++) {
+			g_paletteEntries[paletteEntry].peRed = 0;
+			g_paletteEntries[paletteEntry].peGreen = 0;
+			g_paletteEntries[paletteEntry].peBlue = 0;
+			g_paletteEntries[paletteEntry].peFlags = PC_NOCOLLAPSE;
 		}
 
-		g_paletteEntries[lastEntry].peRed = c_colorChannelMax;
-		g_paletteEntries[lastEntry].peGreen = c_colorChannelMax;
-		g_paletteEntries[lastEntry].peBlue = c_colorChannelMax;
-		g_paletteEntries[lastEntry].peFlags = PC_NOCOLLAPSE;
+		g_paletteEntries[paletteEntry].peRed = c_colorChannelMax;
+		g_paletteEntries[paletteEntry].peGreen = c_colorChannelMax;
+		g_paletteEntries[paletteEntry].peBlue = c_colorChannelMax;
+		g_paletteEntries[paletteEntry].peFlags = PC_NOCOLLAPSE;
 		paletteFlags |= DDPCAPS_ALLOW256;
 	}
 
